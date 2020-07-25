@@ -1,0 +1,32 @@
+name: CI production
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build
+      run: |
+        sudo npm install -g degit
+        npm install
+        npm run build
+      env: 
+        apiKey: ${{ secrets.APIKEY }}
+        authDomain: ${{ secrets.AUTHDOMAIN }}
+        databaseURL: ${{ secrets.DATABASEURL }}
+        projectId: ${{ secrets.PROJECTID }}
+        storageBucket: ${{ secrets.STORAGEBUCKET }}
+        messagingSenderId: ${{ secrets.MESSAGINGSENDERID }}
+        appId: ${{ secrets.APPID }}
+
+    - name: Firebase Deploy
+      run: |
+        sudo npm install -g firebase-tools
+        firebase deploy --token ${{ secrets.FirebaseDeploy }}
