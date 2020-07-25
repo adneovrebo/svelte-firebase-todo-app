@@ -27,6 +27,7 @@
     <hr>
     <Todos uid={user.uid} />
 {:else}
+    <h1>Svelte Firebase Realtime Todo App</h1>
 	<button on:click={login} class="button">
 		Signin with Google
 	</button>
